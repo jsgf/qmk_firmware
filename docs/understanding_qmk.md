@@ -4,7 +4,7 @@ This document attempts to explain how the QMK firmware works from a very high le
 
 * [Introduction](getting_started_introduction.md)
 * [How Keyboards Work](how_keyboards_work.md)
-* [FAQ](faq.md)
+* [FAQ](faq_general.md)
 
 ## Startup
 
@@ -49,7 +49,7 @@ While there are different strategies for doing the actual matrix detection, they
 }
 ```
 
-That datastructure is a direct representation of the matrix for a 4 row by 5 column numpad. When a key is pressed that key's position within the matrix will be returned as `1` instead of `0`.
+That datastructure is a direct representation of the matrix for a 5 row by 4 column numpad. When a key is pressed that key's position within the matrix will be returned as `1` instead of `0`.
 
 Matrix Scanning runs many times per second. The exact rate varies but typically it runs at least 10 times per second to avoid perceptible lag.
 
