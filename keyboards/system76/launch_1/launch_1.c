@@ -223,18 +223,28 @@ void suspend_wakeup_init_kb(void) {
     suspend_wakeup_init_user();
 }
 
-void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    uint8_t caps_leds[2] = {0, 0};
-    uint8_t caps_leds_count;
+static void indicator_for_loc(bool flag, uint8_t row, uint8_t col) {
+    uint8_t leds[2] = {0, 0};
+    uint8_t leds_count;
 
-    caps_leds_count = rgb_matrix_map_row_column_to_led(3, 0, caps_leds);
+    leds_count = rgb_matrix_map_row_column_to_led(row, col, leds);
 
-    for (uint8_t idx = 0; idx < caps_leds_count; idx++) {
-        uint8_t led = caps_leds[idx];
+    for (uint8_t idx = 0; idx < leds_count; idx++) {
+        uint8_t led = leds[idx];
         if (host_keyboard_led_state().caps_lock) {
-            RGB_MATRIX_INDICATOR_SET_COLOR(led, 255, 255, 255);  // assuming caps lock is at led #5
+            rgb_matrix_set_color(led, 255, 255, 255);
         } else {
-            RGB_MATRIX_INDICATOR_SET_COLOR(led, 0, 0, 0);
+            rgb_matrix_set_color(led, 0, 0, 0);
         }
     }
+
+}
+
+void rgb_matrix_indicators_user() {
+    led_t state = host_keyboard_led_state();
+
+    // Capslock on capslock (next to A)
+    indicator_for_loc(state.caps_lock, 3, 0);
+
+    // Other indicators...?
 }
